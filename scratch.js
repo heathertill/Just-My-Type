@@ -1,40 +1,35 @@
 
+// advances the yellow block 1 letter for every keypress
+i = 17.365
+$(document).keypress(function () {
+    let move = (i += 17.365)
+    $('#yellow-block').css('left', move)
+});
 
 
-$('#keyboard-upper-container').css('visibility', 'hidden') 
+/// ---------->>>>>>>>>>>>>
+
+// checks to see if the enter key has been pressed
+
+$(document).keypress(function(event){
+	
+	var keycode = (event.keyCode ? event.keyCode : event.which);
+	if(keycode == '13'){
+		alert('You pressed an "enter" key in somewhere');	
+	}
+	
+});
 
 
-$(document).ready(function () {
-
-    $(document).ready(function () {
-        
-        $(document).keydown(function (e) {
-            if (e.keyCode == 16) {
-                $('#keyboard-upper-container').css('visibility', 'visible');
-                $('#keyboard-lower-container').css('visibility', 'hidden');
-                $('#keyboard-upper-container').prependTo('#keyboard-lower-container')
-                $('#space').appendTo('#keyboard-upper-container').css('visibility', 'visible')
-                
-                
-            }
-        });
-        $(document).keyup(function (e) {
-            if (e.keyCode == 16) {
-                $('#keyboard-upper-container').css('visibility', 'hidden');
-                $('#keyboard-lower-container').css('visibility', 'visible');
-                $('#keyboard-upper-container').appendTo('#keyboard-lower-container');
-                
-                
-            }
-
-
-
-
-
+// returns string index and the ascii code for each letter in a string
+i = -1
+$(document).keypress(function () {
+    let index = (i += 1);
+    let a = $('#div2').text()
+    console.log(a)
+    console.log(a.charCodeAt(index))
+});
 
 
 
 
-        })
-    })
-})
