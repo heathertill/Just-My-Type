@@ -32,4 +32,70 @@ $(document).keypress(function () {
 
 
 
+// cycles through the sentences in the array,
+//advances yellow-block, doesn't restart w/ new sentence
+// tracks index, doesn't restart w/ new sentence
+
+$('#div1').css('left', '5.em')
+
+
+i = -1
+
+j = -1
+c = 0
+array = ['cat food', 'dog food', 'fish food']
+$('#div2').text(array[0])
+
+
+$(document).keypress(function () {
+
+    let index = (j += 1)
+    arrayItem = $('#div2').text()
+    let characters = arrayItem.length
+    if (characters == (index + 1)) {
+        array.splice(0, 1);
+       
+        
+        console.log($('#div2').text())
+        $('#div2').text(array[0])
+        console.log(array)
+        console.log($('#div2').text())
+    }
+    i = 0
+
+    $(document).keypress(function () {
+        let move = (i += 17.365)
+        $('#div1').css('left', move)
+    
+    });
+
+
+    console.log($('#div2').text())
+
+    console.log(index)
+
+
+
+})
+
+
+console.log($('#div2').text())
+
+
+
+newArrItem = (c + 1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
