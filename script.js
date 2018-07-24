@@ -1,4 +1,4 @@
-$(document).keyup(lowerCase())
+$(document).keyup(lowerCase()) //toggle upper/lowercase keyboards
 function upperCase() {
     $('#keyboard-upper-container').slideDown(1);
     $('#keyboard-lower-container').css('visibility', 'hidden')
@@ -7,37 +7,95 @@ function lowerCase() {
     $('#keyboard-upper-container').slideUp(1);
     $('#keyboard-lower-container').css('visibility', 'visible')
 }
+$('#prompt-container').css('padding', '0')
 
-let sentences = ['ten ate neite ate nee enet ite ate inet ent eate', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
-$('#sentence').append(sentences.toString())
+
+a = 0
+i = 0
+j = 1
+
+
+sentences = ['cat food', 'dog food', 'fish food']
+totalLength = sentences[0] + sentences[1] + sentences[2]
+$('#sentence').text(sentences[a])
+
+$(document).keypress(function () {
+
+    $(document).ready(function () {
+        let index = i++
+        let preMove = j++
+        let move = (preMove * 17.365)
+
+
+        sentenceItem = $('#sentence').text()
+
+        let characters = sentenceItem.length // count the length of the sentence
+
+        console.log(preMove)
+        console.log(index)
+        console.log(characters)
+        console.log(move)
+        console.log(sentenceItem)
+        console.log(sentences[a])
+
+
+        if (characters == (index + 1)) {
+            j = 1; //resets index to 0 
+            i = 0
+
+        }
+
+        $('#yellow-block').css('left', move)
+
+        if (characters == (index + 1)) {
+            $('#yellow-block').css('left', 0) //repositions yellow box
+            a = 1
+           
+
+            $('#sentence').text(sentences[a])
+            console.log($('#sentence').text())
+            console.log(a)
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        let str = sentences[a]
+        let n = str.charAt(index)
+        console.log(n)
+        let textValue = str.charCodeAt(index)
+
+
+    })
+
+})
+    ;
+
+
+
+
+$(document).keypress(function () {
+
+
+
+
+});
+
 
 // advances the yellow block 1 letter for every keypress & logs the charCode
-i = 17.365
-j = -1
-$(document).keypress(function () {
-    let move = (i += 17.365)
-    $('#yellow-block').css('left', move)
-    let index = (j += 1);
-    console.log(index)
-    let a = sentences[0]
-    console.log(a)
-    console.log(a.charCodeAt(index))
-
-
-});
-
-
-
-
-$(document).keypress(function () {
-  
-   
-   
-    
-});
-
-
-
 
 
 
@@ -54,20 +112,6 @@ $(document).keyup(function (e) {
     if (e.keyCode == 16) {
         lowerCase()
     }
-
-
-    $(document).ready(function () {
-
-
-
-
-
-
-    })
-
-
-
-
 
 })
 
