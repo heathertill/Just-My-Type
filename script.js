@@ -7,95 +7,81 @@ function lowerCase() {
     $('#keyboard-upper-container').slideUp(1);
     $('#keyboard-lower-container').css('visibility', 'visible')
 }
-$('#prompt-container').css('padding', '0')
 
-
-a = 0
 i = 0
-j = 1
+j = 0
+sentences = ['cat food', 'dog foods', 'fish foods']
+sentencesL = sentences[i].length
+$('#sentence').text(sentences[0])
 
+newArray = [] //contains the keys that were pressed
+newArrayL = newArray.length
 
-sentences = ['cat food', 'dog food', 'fish food']
-totalLength = sentences[0] + sentences[1] + sentences[2]
-$('#sentence').text(sentences[a])
+function addKeys() {
+    let charNum = event.which
+    let char = String.fromCharCode(charNum)
+    if (newArrayL + 1 <= sentencesL) {
+        newArray.push(char)
+    }}
 
-$(document).keypress(function () {
-
-    $(document).ready(function () {
-        let index = i++
-        let preMove = j++
-        let move = (preMove * 17.365)
-
-
-        sentenceItem = $('#sentence').text()
-
-        let characters = sentenceItem.length // count the length of the sentence
-
-        console.log(preMove)
+function newLength() { //sets array.length of the next sentence
+    if (newArrayL + 1 == sentencesL) {
+        let index = i + 1
+        let words = sentences[index]
+        sentencesL = words.length
+        console.log(sentencesL)
         console.log(index)
-        console.log(characters)
-        console.log(move)
-        console.log(sentenceItem)
-        console.log(sentences[a])
+        console.log('still kicking')
+    }};
+
+function newSentence() { // advanced to the next sentence ===> advances index of array
+    if (newArrayL + 1 == sentencesL) {
+        advSentence = j + 1
+        j += 1
+        $('#sentence').text(sentences[j])
+        console.log(sentences[j])
+        console.log('watch it')
+    }};
+
+console.log()
+
+function advArray() {
+
+    if (newArrayL + 1 == sentencesL) {
+
+        newArray = []  // resets the length of newArray ===> empties the keys pressed
+        console.log(newArray.length)
+        console.log('fired')
+    }
+}
+
+$(document).ready(function () {
+
+    $(document).keypress(function (event) {
 
 
-        if (characters == (index + 1)) {
-            j = 1; //resets index to 0 
-            i = 0
+        addKeys()
+        advArray()
+        newSentence()
+        newLength()
 
-        }
-
-        $('#yellow-block').css('left', move)
-
-        if (characters == (index + 1)) {
-            $('#yellow-block').css('left', 0) //repositions yellow box
-            a = 1
-           
-
-            $('#sentence').text(sentences[a])
-            console.log($('#sentence').text())
-            console.log(a)
-        }
+        let charNum = event.which
+        let char = String.fromCharCode(charNum)
+        $('#div3').text(char)
 
 
 
+        newArrayL = newArray.length
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        let str = sentences[a]
-        let n = str.charAt(index)
-        console.log(n)
-        let textValue = str.charCodeAt(index)
+        console.log(newArray)
+        console.log(sentencesL)
+        console.log(newArrayL)
+        console.log(j)
 
 
     })
 
 })
-    ;
-
-
-
-
-$(document).keypress(function () {
-
-
-
-
-});
-
-
-// advances the yellow block 1 letter for every keypress & logs the charCode
 
 
 
