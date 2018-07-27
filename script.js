@@ -11,6 +11,7 @@ function lowerCase() {
 i = 0
 j = 0
 k = 2
+l = 0
 sentences = ['cat food', 'dog foods', 'fish foods']
 sentencesL = sentences[i].length
 $('#sentence').text(sentences[0])
@@ -62,6 +63,8 @@ function moveAlong() {
     };
 
 $(document).ready(function () {
+
+    $('#33').css('background', 'blue')
 
     $(document).keypress(function (event) {
         expectedKey()
