@@ -25,8 +25,6 @@ function addKeys() {
         newArray.push(char)
     }}
 
-console.log()
-
 function moveAlong() {
 
     if (newArrayL + 1 == sentencesL) {
@@ -50,9 +48,23 @@ function moveAlong() {
         $('#yellow-block').css('left', move) //moves the yellowbox on keypress
     }
 
+    function expectedKey() {
+        l += 1
+        let nextLetter = sentences[j][l]
+        $('#div3').text(nextLetter)
+    
+        if (arrayL - 1 == l) { // advances j on last letter of active sent. ==> 1st letter new sent.
+            up = j
+            up += 1
+        } if (arrayL == l) {
+            l = 0
+        } 
+    };
+
 $(document).ready(function () {
 
     $(document).keypress(function (event) {
+        expectedKey()
         addKeys()
         moveAlong()
         moveHighlight()
