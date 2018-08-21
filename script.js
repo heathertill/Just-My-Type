@@ -10,140 +10,138 @@ function lowerCase() {
 
 i = 0
 j = 0
-k = 2
-l = 0
+k = 0
+l = 2
 m = 0
-n = -1
-sentences = ['cat food', 'dog foods', 'fish foods']
-sentencesL = sentences[i].length
-let nextLetter = sentences[j][l]
-let feedbackLetter = sentences[m][n]
+n = 0
+
+kpCount = 0
+sentences = ['cat fool', 'dog cup', 'fish foodx']
+sentencesL = sentences[j].length
+let nextLetter = sentences[j][k]
+let feedbackLetter = sentences[j][k]
 $('#sentence').text(sentences[0])
-$('#target-letter').text(sentences[j][l])
+$('#target-letter').text(sentences[j][k])
 
-newArray = [] //contains the keys that were pressed
-newArrayL = newArray.length
+feedbackArray = [] // number of errors keyed
 
-feedbackArray = []
-
-
-currentSentenceL = sentences[i].length
-
-
-
-function addKeys() {
+function feedback() { // returns x or check for correct/incorrect keystroke
     let charNum = event.which
-    let char = String.fromCharCode(charNum)
-    if (newArrayL + 1 <= sentencesL) {
-        newArray.push(char)
+    let feedbackLetter = sentences[j][k]
+    let codeFeedbackLetter = feedbackLetter.charCodeAt()
+    console.log(m, n, 'm, n feedback')
+    console.log(j, k, 'j, k feedback')
+    if (charNum == codeFeedbackLetter) {
+        $('#feedback').append('<span class="glyphicon glyphicon-ok">')
+        console.log('---ok')
+    } if (charNum !== codeFeedbackLetter) {
+        $('#feedback').append('<span class="glyphicon glyphicon-remove">');
+        console.log('---remove')
     }
+    k += 1 // advances to the next letter
 }
 
-function moveAlong() { // advance the next sentence when typist has finished current sentence
-    if (newArrayL + 1 == sentencesL) {
-        newArray = []  // resets the length of newArray ===> empties the keys pressed
 
-        advSentence = j + 1  // advanced to the next sentence ===> advances index of array
+function targetLetter() { // displays the target letter
+    console.log(m, n, 'm, n target')
+    console.log(j, k, 'j, k target')
+    sentencesL = sentences[j].length
+    let nextLetter = sentences[j][k]
+
+    nextLetter = sentences[j][k]
+    $('#target-letter').text(nextLetter)
+    console.log(sentencesL, 'sentenceL')
+    console.log(nextLetter)
+    if (sentencesL == k) { // advances j on last letter of active sent. ==> 1st letter new sent.
         j += 1
-        $('#sentence').text(sentences[j])
-
-        let index = i + 1
-        let words = sentences[index]
-        sentencesL = words.length  //sets array.length of the next sentence
+        k = 0
+        let advLetter = sentences[j][k]
+        $('#target-letter').text(advLetter)
+        console.log('---targetLetter')
+        console.log(sentencesL, 'sentenceL')
+        console.log(m, n, 'm, n in oldSent')
+        console.log(j, k, 'j, k in oldSent')
+        console.log(advLetter)
     }
-}
+};
 
 function moveHighlight() { // advances the highlight as you type
-    let moveCount = k++
+    sentencesL = sentences[j].length
+    let moveCount = l++
     let move = (moveCount * 17.365)
+    console.log(m, n, 'm, n moveHigh')
+    console.log(j, k, 'j, kmoveHigh')
     if (moveCount == sentencesL) {
-        k = 1
+        l = 1 //resets the highlight to the beginning of the next sentence
+        console.log('---moveHighlight')
+        console.log(m, n, 'm, n in moveHigh')
+        console.log(j, k, 'j, k in moveHigh')
     }
     $('#yellow-block').css('left', move) //moves the yellowbox on keypress
 }
 
-function expectedKey() { // displays the next letter to be pressed
-    l += 1
-    let nextLetter = sentences[j][l]
-    $('#target-letter').text(nextLetter)
-
-    if (sentencesL - 1 == l) { // advances j on last letter of active sent. ==> 1st letter new sent.
-        up = j
-        up += 1
-    } if (sentencesL == l) {
-        l = 0
+function oldSentence() {
+    sentencesL = sentences[j].length
+    console.log(m, n, 'm, n oldSent')
+    console.log(j, k, 'j, k oldSent')
+    if (sentencesL == k) { // advances j on last letter of active sent. ==> 1st letter new sent.
+        j += 1
+        k = 0
+        console.log('---targetLetter    $$$')
+        console.log(m, n, 'm, n in oldSent')
+        console.log(j, k, 'j, k in oldSent')
     }
-};
-
-function feedback() {
-    n += 1
-    let charNum = event.which
-    let feedbackLetter = sentences[m][n]
-    let codeFeedbackLetter = feedbackLetter.charCodeAt(0)
-    feedbackArrayL = feedbackArray.length
-    if (sentencesL - 1 == n) { // advances j on last letter of active sent. ==> 1st letter new sent.
-        upFeed = m
-        upFeed += 1
-    } if (sentencesL == n) {
-        l = 0
-    } if (charNum == codeFeedbackLetter) {
-        $('#feedback').append('<span class="glyphicon glyphicon-ok">')
-    } if (charNum !== codeFeedbackLetter) {
-        $('#feedback').append('<span class="glyphicon glyphicon-remove">');
-        feedbackArray.push('x')
+    if (kpCount == sentencesL - 1) { //resets kpCount
+        kpCount = -1
+        console.log(m, n, 'm, n in oldSent')
+        console.log(j, k, 'j, k in oldSent')
+        console.log('---reset kpCount    ###')
     }
-
-    if (n == currentSentenceL - 1) {
-        $('#feedback').empty()
-    }
-
-
-
-
-
-    console.log(feedbackArray)
-    console.log(feedbackArrayL)
-    console.log(m, n)
-    console.log(i)
-    console.log(j)
-    console.log(sentencesL)
-    console.log(currentSentenceL)
-    console.log(newArrayL)
-    console.log(feedbackLetter)
-    console.log(codeFeedbackLetter)
-    console.log(charNum)
-    console.log('...')
+    kpCount++ //counts # of keypress
 }
 
+function newSentence() {
+    n += 1
+    sentencesL = sentences[j].length
+    console.log(m, n, 'm, n newSent')
+    console.log(j, k, 'j, k newSent')
+    if (n == sentencesL) {
+        m++
+        n = 0
+        $('#sentence').text(sentences[j])
+        console.log(m, n, 'm, n in newSent')
+        console.log(j, k, 'j, k in newSent')
+        console.log('---newSentence   ***')
+    }
+}
 
 
 $(document).ready(function () {
 
 
     $(document).keypress(function (event) {
-        expectedKey()
-        addKeys()
-        moveAlong()
+
+        newSentence()
+        oldSentence()
+        feedback()
+        targetLetter()
         moveHighlight()
 
-
-        let charNum = event.which // the code for the key pressed
-        let char = String.fromCharCode(charNum)
-        $('#div3').text(char)
-
-        newArrayL = newArray.length
-
-
-
+        console.log(m, n, 'm, n')
+        console.log(j, k, 'j, k')
+        console.log('***')
 
 
 
     })
+
     $(document).keypress(function (event) {
-        feedback()
-        console.log(feedbackArray)
-        console.log(feedbackArrayL)
+
+
+
     })
+
+
 
     // highlights the key that has pressed in the browser
     $(document).keypress(function (e) {
@@ -156,19 +154,7 @@ $(document).ready(function () {
 
 
 
-
-
-
-
-
-
-
 })
-
-
-
-
-
 
 // appearance of keyboard
 $(document).keydown(function (e) {
