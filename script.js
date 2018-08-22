@@ -8,29 +8,70 @@ function lowerCase() {
     $('#keyboard-lower-container').css('visibility', 'visible')
 }
 
-i = 0
+i = 0 /////
 j = 0
 k = 0
-l = 2
+l = 1
 m = 0
 n = 0
 
 kpCount = 0
 sentences = ['cat fool', 'dog cup', 'fish foodx']
 sentencesL = sentences[j].length
-let nextLetter = sentences[j][k]
+sentencesL2 = sentences[m].length
+let nextLetter = sentences[m][n]
 let feedbackLetter = sentences[j][k]
 $('#sentence').text(sentences[0])
 $('#target-letter').text(sentences[j][k])
 
-feedbackArray = [] // number of errors keyed
-
-function feedback() { // returns x or check for correct/incorrect keystroke
+function textFeedback() {
+    sentencesL = sentences[j].length
     let charNum = event.which
     let feedbackLetter = sentences[j][k]
     let codeFeedbackLetter = feedbackLetter.charCodeAt()
-    console.log(m, n, 'm, n feedback')
-    console.log(j, k, 'j, k feedback')
+    console.log(j, k, 'j, k typeText')
+    k++
+    if (sentencesL == k) {
+        k = 0
+        console.log('&')
+        $('#sentence').text(sentences[++j])
+
+    }
+      if (charNum == codeFeedbackLetter) {
+        $('#feedback').append('<span class="glyphicon glyphicon-ok">')
+        console.log('---ok')
+    } if (charNum !== codeFeedbackLetter) {
+        $('#feedback').append('<span class="glyphicon glyphicon-remove">');
+        console.log('---remove')
+    }
+}
+
+function targetHighlight() {
+    nextLetter = sentences[m][++n]
+    sentencesL2 = sentences[m].length
+    let moveCount = ++l
+    let move = (moveCount * 17.365)
+   
+    console.log(m, n, nextLetter, 'm, n tLetter')
+    if (sentencesL2 == n + 1) {
+        m++
+        n = -1
+        l = 0
+        console.log(m, n, 'm, n')
+        console.log(l, 'l')
+        console.log(moveCount, 'moveCount')
+        console.log('!')
+    }
+    $('#target-letter').text(nextLetter)
+    $('#yellow-block').css('left', move)
+}
+
+function feedback() {
+    let charNum = event.which
+    let feedbackLetter = sentences[m][n]
+    let codeFeedbackLetter = feedbackLetter.charCodeAt()
+
+
     if (charNum == codeFeedbackLetter) {
         $('#feedback').append('<span class="glyphicon glyphicon-ok">')
         console.log('---ok')
@@ -38,81 +79,7 @@ function feedback() { // returns x or check for correct/incorrect keystroke
         $('#feedback').append('<span class="glyphicon glyphicon-remove">');
         console.log('---remove')
     }
-    k += 1 // advances to the next letter
-}
-
-
-function targetLetter() { // displays the target letter
-    console.log(m, n, 'm, n target')
-    console.log(j, k, 'j, k target')
-    sentencesL = sentences[j].length
-    let nextLetter = sentences[j][k]
-
-    nextLetter = sentences[j][k]
-    $('#target-letter').text(nextLetter)
-    console.log(sentencesL, 'sentenceL')
-    console.log(nextLetter)
-    if (sentencesL == k) { // advances j on last letter of active sent. ==> 1st letter new sent.
-        j += 1
-        k = 0
-        let advLetter = sentences[j][k]
-        $('#target-letter').text(advLetter)
-        console.log('---targetLetter')
-        console.log(sentencesL, 'sentenceL')
-        console.log(m, n, 'm, n in oldSent')
-        console.log(j, k, 'j, k in oldSent')
-        console.log(advLetter)
-    }
-};
-
-function moveHighlight() { // advances the highlight as you type
-    sentencesL = sentences[j].length
-    let moveCount = l++
-    let move = (moveCount * 17.365)
-    console.log(m, n, 'm, n moveHigh')
-    console.log(j, k, 'j, kmoveHigh')
-    if (moveCount == sentencesL) {
-        l = 1 //resets the highlight to the beginning of the next sentence
-        console.log('---moveHighlight')
-        console.log(m, n, 'm, n in moveHigh')
-        console.log(j, k, 'j, k in moveHigh')
-    }
-    $('#yellow-block').css('left', move) //moves the yellowbox on keypress
-}
-
-function oldSentence() {
-    sentencesL = sentences[j].length
-    console.log(m, n, 'm, n oldSent')
-    console.log(j, k, 'j, k oldSent')
-    if (sentencesL == k) { // advances j on last letter of active sent. ==> 1st letter new sent.
-        j += 1
-        k = 0
-        console.log('---targetLetter    $$$')
-        console.log(m, n, 'm, n in oldSent')
-        console.log(j, k, 'j, k in oldSent')
-    }
-    if (kpCount == sentencesL - 1) { //resets kpCount
-        kpCount = -1
-        console.log(m, n, 'm, n in oldSent')
-        console.log(j, k, 'j, k in oldSent')
-        console.log('---reset kpCount    ###')
-    }
-    kpCount++ //counts # of keypress
-}
-
-function newSentence() {
-    n += 1
-    sentencesL = sentences[j].length
-    console.log(m, n, 'm, n newSent')
-    console.log(j, k, 'j, k newSent')
-    if (n == sentencesL) {
-        m++
-        n = 0
-        $('#sentence').text(sentences[j])
-        console.log(m, n, 'm, n in newSent')
-        console.log(j, k, 'j, k in newSent')
-        console.log('---newSentence   ***')
-    }
+    
 }
 
 
@@ -120,15 +87,16 @@ $(document).ready(function () {
 
 
     $(document).keypress(function (event) {
+        textFeedback()
+        
+        targetHighlight()
+        
 
-        newSentence()
-        oldSentence()
-        feedback()
-        targetLetter()
-        moveHighlight()
 
-        console.log(m, n, 'm, n')
         console.log(j, k, 'j, k')
+        console.log(m, n, 'm, n')
+        console.log(sentencesL, 'sentenceL')
+        console.log(sentencesL2, 'sentenceL2')
         console.log('***')
 
 
@@ -169,4 +137,4 @@ $(document).keyup(function (e) {
 
 })
 
-console.log('...')
+
