@@ -8,22 +8,25 @@ function lowerCase() {
     $('#keyboard-lower-container').css('visibility', 'visible')
 }
 
-i = 0 /////
+i = 0
 j = 0
 k = 0
 l = 1
 m = 0
 n = 0
-o = 0
+
 
 
 kpCount = 0
-sentences = ['cat fool', 'dog cup', 'fish foodx']
-sentencesL = sentences[j].length
-sentencesL2 = sentences[m].length
-sentencesL3 = sentences[o].length
+let sentence = ['ten ate neite ate nee enet ite ate inet ent eate', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
+
+let sentences = ['cat fool', 'dog cup', 'fish foodx']
+let sentencesL = sentences[j].length
+let sentencesL2 = sentences[m].length
 let nextLetter = sentences[m][n]
 let feedbackLetter = sentences[j][k]
+let checkTimer = sentences[0][0]
+s = 0
 ok = []
 remove = []
 response = []
@@ -39,16 +42,16 @@ function textFeedback() {
     let feedbackLetter = sentences[j][k]
     let codeFeedbackLetter = feedbackLetter.charCodeAt()
     responseL = response.length
-    console.log(j, k, 'j, k typeText')
-    console.log(sentencesL, 'sentenceL')
-    console.log(response.length, 'respL')
+
+
     ++k
+    ++i
     if (sentencesL == k) {
         k = 0
         console.log('&')
         $('#sentence').text(sentences[++j])
     }
-      if (charNum == codeFeedbackLetter) {
+    if (charNum == codeFeedbackLetter) {
         $('#feedback').append('<span class="glyphicon glyphicon-ok">')
         ok.push('+')
         response.push('+')
@@ -58,13 +61,15 @@ function textFeedback() {
         remove.push('x')
         response.push('x')
         console.log('---remove')
-    } if (sentencesL == responseL + 1) {
+    } if (sentencesL == i) {
+        i = 0
         $('#feedback').empty()
         console.log('+')
+    } if (feedbackLetter === sentences[2][9]) {
+
+
+        alert('done')
     }
-    console.log(ok, 'ok')
-    console.log(remove, 'remove')
-    console.log(response, 'response')
 }
 
 function targetHighlight() {
@@ -72,7 +77,7 @@ function targetHighlight() {
     sentencesL2 = sentences[m].length
     let moveCount = ++l
     let move = (moveCount * 17.365)
-   
+
     console.log(m, n, nextLetter, 'm, n tLetter')
     if (sentencesL2 == n + 1) {
         m++
@@ -87,6 +92,32 @@ function targetHighlight() {
     $('#target-letter').text(nextLetter)
     $('#yellow-block').css('left', move)
 }
+function timer() {
+    checkTimer = sentences[j][k]
+    console.log(checkTimer, 'checkTimer')
+    console.log(j, k, 'j, k')
+    if (sentences[0][0] === checkTimer) {
+        let seconds = 1000;
+        let minutes = seconds * 60
+        let d = new Date();
+        let time1 = d.getTime();
+        s = Math.round(time1 / seconds);
+
+        console.log(s)
+        console.log(j, k)
+        console.log('BOOM!!!!')
+    } if (sentences[2][9] == checkTimer) {
+        let seconds = 1000;
+        let minutes = seconds * 60
+        let d = new Date();
+        let time2 = d.getTime();
+        let finish = Math.round(time2 / seconds);
+        console.log(finish)
+        console.log(s)
+        console.log(finish - s)
+        console.log(j, k)
+    }
+}
 
 
 
@@ -95,11 +126,12 @@ $(document).ready(function () {
 
 
     $(document).keypress(function (event) {
+        timer()
+
         textFeedback()
         targetHighlight()
-        
-
-
+        console.log(l)
+        console.log(s)
         console.log(j, k, 'j, k')
         console.log(m, n, 'm, n')
         console.log(sentencesL, 'sentenceL')
