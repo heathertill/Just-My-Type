@@ -14,36 +14,57 @@ k = 0
 l = 1
 m = 0
 n = 0
+o = 0
+
 
 kpCount = 0
 sentences = ['cat fool', 'dog cup', 'fish foodx']
 sentencesL = sentences[j].length
 sentencesL2 = sentences[m].length
+sentencesL3 = sentences[o].length
 let nextLetter = sentences[m][n]
 let feedbackLetter = sentences[j][k]
+ok = []
+remove = []
+response = []
+
 $('#sentence').text(sentences[0])
 $('#target-letter').text(sentences[j][k])
+
+
 
 function textFeedback() {
     sentencesL = sentences[j].length
     let charNum = event.which
     let feedbackLetter = sentences[j][k]
     let codeFeedbackLetter = feedbackLetter.charCodeAt()
+    responseL = response.length
     console.log(j, k, 'j, k typeText')
-    k++
+    console.log(sentencesL, 'sentenceL')
+    console.log(response.length, 'respL')
+    ++k
     if (sentencesL == k) {
         k = 0
         console.log('&')
         $('#sentence').text(sentences[++j])
-
     }
       if (charNum == codeFeedbackLetter) {
         $('#feedback').append('<span class="glyphicon glyphicon-ok">')
+        ok.push('+')
+        response.push('+')
         console.log('---ok')
     } if (charNum !== codeFeedbackLetter) {
-        $('#feedback').append('<span class="glyphicon glyphicon-remove">');
+        $('#feedback').append('<span class="glyphicon glyphicon-remove">')
+        remove.push('x')
+        response.push('x')
         console.log('---remove')
+    } if (sentencesL == responseL + 1) {
+        $('#feedback').empty()
+        console.log('+')
     }
+    console.log(ok, 'ok')
+    console.log(remove, 'remove')
+    console.log(response, 'response')
 }
 
 function targetHighlight() {
@@ -60,27 +81,14 @@ function targetHighlight() {
         console.log(m, n, 'm, n')
         console.log(l, 'l')
         console.log(moveCount, 'moveCount')
+        console.log(sentencesL2, 'sentenceL2')
         console.log('!')
     }
     $('#target-letter').text(nextLetter)
     $('#yellow-block').css('left', move)
 }
 
-function feedback() {
-    let charNum = event.which
-    let feedbackLetter = sentences[m][n]
-    let codeFeedbackLetter = feedbackLetter.charCodeAt()
 
-
-    if (charNum == codeFeedbackLetter) {
-        $('#feedback').append('<span class="glyphicon glyphicon-ok">')
-        console.log('---ok')
-    } if (charNum !== codeFeedbackLetter) {
-        $('#feedback').append('<span class="glyphicon glyphicon-remove">');
-        console.log('---remove')
-    }
-    
-}
 
 
 $(document).ready(function () {
@@ -88,7 +96,6 @@ $(document).ready(function () {
 
     $(document).keypress(function (event) {
         textFeedback()
-        
         targetHighlight()
         
 
