@@ -1,164 +1,167 @@
-$(document).keyup(lowerCase()) //toggle upper/lowercase keyboards
-function upperCase() {
-    $('#keyboard-upper-container').slideDown(1);
-    $('#keyboard-lower-container').css('visibility', 'hidden')
-}
-function lowerCase() {
-    $('#keyboard-upper-container').slideUp(1);
-    $('#keyboard-lower-container').css('visibility', 'visible')
-}
+$(document).ready(function () {
+    newGame()
 
-time1 = 0
-time2 = 0
-i = 0
-j = 0
-k = 0
-l = 1
-m = 0
-n = 0
-kpCount = 0
-let sentence = ['ten ate neite ate nee enet ite ate inet ent eate', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
-let sentences = ['cat fool', 'dog gup', 'fish foodx']
-let sentencesL = sentences[j].length
-let sentencesL2 = sentences[m].length
-let sentencesCount = sentences.length
-let nextLetter = sentences[m][n]
-let feedbackLetter = sentences[j][k]
-start = 0
-finish = 0
-ok = []
-remove = []
-numberOfMistakes = remove.length
-response = []
+    $(document).keyup(lowerCase())              //toggle upper/lowercase keyboards
+    function upperCase() {
+        $('#keyboard-upper-container').slideDown(1);
+        $('#keyboard-lower-container').css('visibility', 'hidden')
+    }
+    function lowerCase() {
+        $('#keyboard-upper-container').slideUp(1);
+        $('#keyboard-lower-container').css('visibility', 'visible')
+    }
+    $(document).keydown(function (e) {          // appearance of keyboard
+        if (e.keyCode == 16) {
+            upperCase()
+        }
+    });
+    $(document).keyup(function (e) {
+        if (e.keyCode == 16) {
+            lowerCase()
+        }
+    })
 
-$('#sentence').text(sentences[0])
-$('#target-letter').text(sentences[j][k])
-
-function textFeedback() {
-    console.log(j, k, 'j, k')
-    sentencesL = sentences[j].length
-    let charNum = event.which
-    let feedbackLetter = sentences[j][k]
-    let codeFeedbackLetter = feedbackLetter.charCodeAt()
-    responseL = response.length
-    ++k
-    ++i
-    if (sentencesL == k) {
+    function newGame() {
+        i = 0 // resets sentenceL
+        j = 0
         k = 0
-        console.log('&')
-        $('#sentence').text(sentences[++j])
+        l = 1 // moves yellow-block
+        m = 0
+        n = 1
+        time1 = 0
+        time2 = 0
+        kpCount = 0
+        totalCharacters = 0
+        start = 0
+        finish = 0
+        numberOfMistakes = 0
     }
-    if (charNum == codeFeedbackLetter) {
-        $('#feedback').append('<span class="glyphicon glyphicon-ok">')
-        ok.push('+')
-        response.push('+')
-        console.log('---ok')
-    } if (charNum !== codeFeedbackLetter) {
-        $('#feedback').append('<span class="glyphicon glyphicon-remove">')
-        remove.push('x')
-        response.push('x')
-        console.log('---remove')
-    } if (sentencesL == i) {
-        i = 0
-        $('#feedback').empty()
-        console.log('+')
-    } if (feedbackLetter === sentences[2][9]) {
-        alert('done')
+
+    function endGame() {
+        alert('Thank you for playing!!!')
+
     }
-    console.log(sentencesCount, 'sentencesCount')
-    console.log(sentencesL, 'sentenceL')
-    console.log(j, k, 'j, k')
-}
 
-
-function targetHighlight() {
-    console.log(j, k, 'j, k')
-    console.log(m, n, 'm, n')
+    let sentence = ['ten ate neite ate nee enet ite ate inet ent eate', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
+    let sentences = ['cat foil', 'dog gup', 'fish foodx']
+    let sentencesL = sentences[j].length
+    let sentencesL2 = sentences[m].length
     let sentencesCount = sentences.length
-    nextLetter = sentences[m][++n]
-    sentencesL2 = sentences[m].length
-    let moveCount = l++
-    let move = (moveCount * 17.365)
-    if (sentencesL2 == n + 1) {
-        m++
-        n = -1
-        l = 1
-        console.log('!')
-    } 
-    $('#target-letter').text(nextLetter)
-    $('#yellow-block').css('left', move)
-    console.log(j, k, 'j, k')
-    console.log(m, n, 'm, n')
-}
+    let nextLetter = sentences[m][n]
+    let feedbackLetter = sentences[j][k]
 
-function timer1() {
-let numberOfWords = 6
-    let d = new Date();
-    let seconds = 1000;
-    let minutes = seconds * 60
-    if (j == 0) {
-        if (k == 0) {
-            time1 = d.getTime();
-            console.log(time1)
-        }
-    } if (sentencesCount == j + 1) {
-        if (sentencesL == k + 2 ) {
-            time2 = d.getTime();
-            console.log(time2)
 
+    for (let h = 0; h < sentencesCount; h++) {
+        let characters = sentences[h].length
+        totalCharacters += characters
+        console.log(totalCharacters)
+    }
+
+    $('#sentence').text(sentences[0])
+    $('#target-letter').text(sentences[j][k])
+
+    function textFeedback() {
+        sentencesL = sentences[j].length
+        let charNum = event.which
+        let feedbackLetter = sentences[j][k]
+        let codeFeedbackLetter = feedbackLetter.charCodeAt()
+        ++k
+        ++i
+        if (sentencesL == k) {
+            k = 0
+            console.log('&')
+            $('#sentence').text(sentences[++j])
+        } if (charNum == codeFeedbackLetter) {
+            $('#feedback').append('<span class="glyphicon glyphicon-ok">')
+        } if (charNum !== codeFeedbackLetter) {
+            $('#feedback').append('<span class="glyphicon glyphicon-remove">')
+            numberOfMistakes++
+        } if (sentencesL == i) {
+            i = 0
+            $('#feedback').empty()
         }
     }
-    time = time2 - time1
-    totalTime = time/minutes
-    wpm = [(numberOfWords / totalTime) - (2 * numberOfMistakes)]
-    console.log(totalTime)
-    console.log(wpm)
-}
 
-function timer() {
-    checkTimer = sentences[j][k]
-    console.log(checkTimer, 'checkTimer')
-    console.log(j, k, 'j, k')
-    if (sentences[0][0] === checkTimer) {
-        
-        let minutes = seconds * 60
+    function targetHighlight() {
+        nextLetter = sentences[m][n++]
+        let moveCount = ++l
+        let move = (moveCount * 17.365)
+        kpCount++
+        console.log(kpCount, 'kpCount')
+        if (totalCharacters > kpCount) {
+            $('#target-letter').text(nextLetter)
+        } if (totalCharacters == kpCount) {
+            $('#target-letter').empty()
+        }
+
+        $('#yellow-block').css('left', move)
+        console.log(totalCharacters, 'totalCharacters')
+
+        if (totalCharacters > kpCount + 1) {
+            if (sentencesL2 == n) {
+                ++m
+                n = 0
+                l = 0
+                console.log(m, n, 'm, n')
+            }
+        }
+        console.log(m, n, 'm, n')
+        sentencesL2 = sentences[m].length
+    }
+
+    function timer() {
         let d = new Date();
-        let time1 = d.getTime();
-        start = Math.round(time1 / seconds);
-        console.log('BOOM!!!!')
-    } if (sentences[2][9] == checkTimer) {
+        console.log(sentencesL, 'sentenceL')
+        console.log(j, k, 'j, k')
+        if (j == 0 && k == 0) {
+            time1 = d.getTime();
+        } if (sentencesCount == j + 1 && sentencesL == k + 1) {
+            time2 = d.getTime();
+        }
+    }
+
+    function speed() {
+        let numberOfWords = 6
         let seconds = 1000;
         let minutes = seconds * 60
-        let d = new Date();
-        let time2 = d.getTime();
-        let finish = Math.round(time2 / seconds);
-        console.log(finish)
-        console.log(s)
-        console.log(finish - s)
+        if (totalCharacters == kpCount) {
+            time = time2 - time1
+            totalTime = time / minutes
+            wpm = (numberOfWords / totalTime) - (2 * numberOfMistakes)
+            console.log(numberOfMistakes * 2, 'number of mistakes * 2')
+            console.log(numberOfWords / totalTime, '#words / totalTime')
+            $('#target-letter').text('You typed an average of ' + wpm.toFixed() + ' words per minute.')
+            $('#target-letter').fadeOut(6000, function () {
+                $('#target-letter').empty()
+                $('#feedback').append('Would you like to play again?');
+            })
+            $('#target-letter').fadeIn(1500, function () {
+                $('#target-letter').append('<input class=button type=button value=yes>')
+                $('#target-letter').append('<input class=button type=button value=no>')
+            })
+            if (2 * numberOfMistakes >= numberOfWords / totalTime) {
+                $('#target-letter').text('Too many errors!!!')
+                console.log('try again')
+            }
+        }
     }
-}
 
-function reset() {
-    if (sentencesCount == j) {
+    function replay() {
+
         
-    } 
-}
 
-$(document).ready(function () {
+    }
+
 
 
     $(document).keypress(function (event) {
-        timer1()
-
+        timer()
         textFeedback()
         targetHighlight()
+        speed()
 
-        console.log(time1)
-        console.log(time2)
-        console.log(time1 - time2)
-        console.log(j, k, 'j, k')
         console.log(m, n, 'm, n')
-        console.log(wpm)
+
         console.log('*******************')
     })
 
@@ -171,16 +174,5 @@ $(document).ready(function () {
     })
 })
 
-// appearance of keyboard
-$(document).keydown(function (e) {
-    if (e.keyCode == 16) {
-        upperCase()
-    }
-});
-$(document).keyup(function (e) {
-    if (e.keyCode == 16) {
-        lowerCase()
-    }
-})
 
 
